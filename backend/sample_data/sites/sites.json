@@ -1,0 +1,110 @@
+[
+  {
+    "id": "site_patna",
+    "name": "Patna Ganga Station",
+    "location": "Patna, Bihar",
+    "latitude": 25.5941,
+    "longitude": 85.1376,
+    "river": "Ganga",
+    "basin": "Ganga Basin",
+    "description": "Primary validation site from ESCI 2026 paper. High monsoon flood dynamics with up to 48,000 m\u00b3/s peak flows.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_varanasi",
+    "name": "Varanasi Ghats Station",
+    "location": "Varanasi, UP",
+    "latitude": 25.3176,
+    "longitude": 82.9739,
+    "river": "Ganga",
+    "basin": "Ganga Basin",
+    "description": "Urban river reach critical for turbidity, sediment load, and industrial pollution tracking.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_haridwar",
+    "name": "Haridwar Har Ki Pauri",
+    "location": "Haridwar, Uttarakhand",
+    "latitude": 29.9457,
+    "longitude": 78.1642,
+    "river": "Ganga",
+    "basin": "Ganga Basin",
+    "description": "Upper Ganga monitoring station influenced by Himalayan snowmelt and pre-monsoon surges.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_guwahati",
+    "name": "Guwahati Brahmaputra Reach",
+    "location": "Guwahati, Assam",
+    "latitude": 26.1445,
+    "longitude": 91.7362,
+    "river": "Brahmaputra",
+    "basin": "Brahmaputra Basin",
+    "description": "Massive braided discharge channel with frequent catastrophic monsoon flooding and rapid sandbar migration.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_rajahmundry",
+    "name": "Rajahmundry Godavari Station",
+    "location": "Rajahmundry, Andhra Pradesh",
+    "latitude": 17.0005,
+    "longitude": 81.804,
+    "river": "Godavari",
+    "basin": "Godavari Basin",
+    "description": "Peninsular delta river monitoring. Regulated by Dowleswaram Barrage with flash flood pulses.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_vijayawada",
+    "name": "Vijayawada Prakasam Barrage",
+    "location": "Vijayawada, Andhra Pradesh",
+    "latitude": 16.5062,
+    "longitude": 80.648,
+    "river": "Krishna",
+    "basin": "Krishna Basin",
+    "description": "Key hydraulic structure on Krishna river managing irrigation and municipal releases.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_cuttack",
+    "name": "Cuttack Mahanadi Station",
+    "location": "Cuttack, Odisha",
+    "latitude": 20.4625,
+    "longitude": 85.8828,
+    "river": "Mahanadi",
+    "basin": "Mahanadi Basin",
+    "description": "Deltaic network prone to cyclonic storm surges and heavy coastal river discharges.",
+    "status": "active",
+    "is_ungauged": false
+  },
+  {
+    "id": "site_kosi_ungauged",
+    "name": "Upper Kosi Tributary (Ungauged)",
+    "location": "North Bihar Border",
+    "latitude": 26.54,
+    "longitude": 86.95,
+    "river": "Kosi Tributary",
+    "basin": "Ganga Basin",
+    "description": "Remote ungauged basin evaluated via regional hydraulic geometry power laws and DEM reach slope.",
+    "status": "active",
+    "is_ungauged": true
+  },
+  {
+    "id": "site_chennai_lake",
+    "name": "Chembarambakkam Lake",
+    "location": "Chennai, Tamil Nadu",
+    "latitude": 13.0012,
+    "longitude": 80.0618,
+    "river": "Lake / Reservoir",
+    "basin": "Kaveri / Coastal Basin",
+    "description": "Critical freshwater reservoir serving the Chennai metropolitan area.",
+    "status": "active",
+    "is_ungauged": false
+  }
+]
