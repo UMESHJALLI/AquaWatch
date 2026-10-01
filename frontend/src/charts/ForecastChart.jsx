@@ -19,7 +19,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 }
 
 export default function ForecastChart({ forecast = {} }) {
-  if (!forecast.forecast_dates?.length) {
+  const dates = forecast.forecast_dates || forecast.forecast?.map(f => f.date) || []
+  const discharges = forecast.discharge_forecast || forecast.forecast?.map(f => f.predicted_discharge_m3s) || []
+  const lowers = forecast.discharge_lower || forecast.forecast?.map(f => f.confidence_interval?.lower) || []
+  const uppers = forecast.discharge_upper || forecast.forecast?.map(f => f.confidence_interval?.upper) || []
+  const risks = forecast.flood_risk_forecast || forecast.forecast?.map(f => f.predicted_flood_risk) || []
+
+  if (!dates.length) {
     return (
       <div className="glass-card p-5 flex items-center justify-center h-64 text-slate-400 text-sm">
         Select a monitoring site to view forecast
@@ -27,12 +33,12 @@ export default function ForecastChart({ forecast = {} }) {
     )
   }
 
-  const data = forecast.forecast_dates.map((date, i) => ({
+  const data = dates.map((date, i) => ({
     date,
-    discharge: forecast.discharge_forecast?.[i] ?? 0,
-    lower: forecast.discharge_lower?.[i] ?? 0,
-    upper: forecast.discharge_upper?.[i] ?? 0,
-    floodRisk: (forecast.flood_risk_forecast?.[i] ?? 0) * 100,
+    discharge: discharges[i] ?? 0,
+    lower: lowers[i] ?? 0,
+    upper: uppers[i] ?? 0,
+    floodRisk: (risks[i] ?? 0) * 100,
   }))
 
   const threshold = forecast.flood_alert_threshold ?? 30000

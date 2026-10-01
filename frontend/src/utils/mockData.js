@@ -212,29 +212,45 @@ export function generateMockForecast(siteId, days = 7) {
   const site = MOCK_SITES.find(s => s.id === siteId) || MOCK_SITES[0]
   const baseQ = site.latest.discharge
   const forecasts = []
+  const dates = []
+  const dischargeList = []
+  const lowerList = []
+  const upperList = []
+  const areaList = []
+  const turbList = []
+  const riskList = []
 
   const today = new Date()
   for (let i = 1; i <= days; i++) {
     const d = new Date(today)
     d.setDate(d.getDate() + i)
     const dateStr = d.toISOString().split('T')[0]
-    const factor = 1 + (i * 0.05) + (Math.sin(i) * 0.08)
+    const factor = 1 + (i * 0.04) + (Math.sin(i * 1.2) * 0.07)
     const q = Math.round(baseQ * factor)
-    const riskVal = Math.min(0.95, (q / baseQ) * site.latest.flood_risk)
+    const riskVal = Math.min(0.95, Number(((q / baseQ) * site.latest.flood_risk).toFixed(2)))
+    const lower = Math.round(q * 0.88)
+    const upper = Math.round(q * 1.14)
+    const area = Math.round((site.latest.water_area * factor) / 10000)
+    const turb = Number((38 + i * 2.8 + Math.random() * 5).toFixed(1))
+
+    dates.push(dateStr)
+    dischargeList.push(q)
+    lowerList.push(lower)
+    upperList.push(upper)
+    areaList.push(area)
+    turbList.push(turb)
+    riskList.push(riskVal)
 
     forecasts.push({
       date: dateStr,
       day_offset: i,
       predicted_discharge_m3s: q,
       predicted_water_area_m2: Math.round(site.latest.water_area * factor),
-      predicted_flood_risk: Number(riskVal.toFixed(2)),
+      predicted_flood_risk: riskVal,
       flood_level: riskVal > 0.7 ? "High" : riskVal > 0.4 ? "Moderate" : "Low",
       rainfall_forecast_mm: Number((10 + i * 4.5 + Math.random() * 8).toFixed(1)),
       soil_saturation_pct: Math.min(95, Math.round(55 + i * 3)),
-      confidence_interval: {
-        lower: Math.round(q * 0.88),
-        upper: Math.round(q * 1.14)
-      }
+      confidence_interval: { lower, upper }
     })
   }
 
@@ -243,6 +259,14 @@ export function generateMockForecast(siteId, days = 7) {
     site_name: site.name,
     forecast_days: days,
     generated_at: new Date().toISOString(),
+    forecast_dates: dates,
+    discharge_forecast: dischargeList,
+    discharge_lower: lowerList,
+    discharge_upper: upperList,
+    area_forecast: areaList,
+    turbidity_forecast: turbList,
+    flood_risk_forecast: riskList,
+    flood_alert_threshold: Math.round(baseQ * 1.12),
     forecast: forecasts,
     advisories: [
       `Monsoon runoff pulse expected over the next ${days} days across ${site.river} reach.`,
@@ -261,7 +285,7 @@ export const MOCK_ALERTS = [
     message: "Discharge exceeded 31,000 m³/s threshold. Satellite MNDWI indicates 14.2% surface expansion along north embankments.",
     timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
     acknowledged: false,
-    severity: "danger"
+    severity: "severe"
   },
   {
     id: "alert_02",
@@ -272,7 +296,7 @@ export const MOCK_ALERTS = [
     message: "Radar backscatter drop indicates submerged vegetation across 2,850,000 m² channel zone. Manning discharge ~42,100 m³/s.",
     timestamp: new Date(Date.now() - 3600000 * 6).toISOString(),
     acknowledged: false,
-    severity: "danger"
+    severity: "severe"
   },
   {
     id: "alert_03",

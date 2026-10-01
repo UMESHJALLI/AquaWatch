@@ -41,13 +41,21 @@ export default function ForecastAlerts() {
   }
 
   // Summary stats from forecast
-  const maxDischarge = forecast.discharge_forecast ? Math.max(...forecast.discharge_forecast) : null
-  const avgDischarge = forecast.discharge_forecast ? forecast.discharge_forecast.reduce((a, b) => a + b, 0) / forecast.discharge_forecast.length : null
-  const floodTriggerDays = forecast.discharge_forecast?.filter(v => v > (forecast.flood_alert_threshold ?? 30000)).length ?? 0
-  const maxRisk = forecast.flood_risk_forecast ? Math.max(...forecast.flood_risk_forecast) : null
+  const forecastDates = forecast.forecast_dates || forecast.forecast?.map(f => f.date) || []
+  const dischargeForecast = forecast.discharge_forecast || forecast.forecast?.map(f => f.predicted_discharge_m3s) || []
+  const dischargeLower = forecast.discharge_lower || forecast.forecast?.map(f => f.confidence_interval?.lower) || []
+  const dischargeUpper = forecast.discharge_upper || forecast.forecast?.map(f => f.confidence_interval?.upper) || []
+  const areaForecast = forecast.area_forecast || forecast.forecast?.map(f => Math.round((f.predicted_water_area_m2 || 0) / 10000)) || []
+  const floodRiskForecast = forecast.flood_risk_forecast || forecast.forecast?.map(f => f.predicted_flood_risk) || []
+  const threshold = forecast.flood_alert_threshold ?? 30000
+
+  const maxDischarge = dischargeForecast.length ? Math.max(...dischargeForecast) : null
+  const avgDischarge = dischargeForecast.length ? dischargeForecast.reduce((a, b) => a + b, 0) / dischargeForecast.length : null
+  const floodTriggerDays = dischargeForecast.filter(v => v > threshold).length
+  const maxRisk = floodRiskForecast.length ? Math.max(...floodRiskForecast) : null
 
   const unreadCount = alerts.filter(a => !a.acknowledged).length
-  const severeCount = alerts.filter(a => a.severity === 'severe').length
+  const severeCount = alerts.filter(a => a.severity === 'severe' || a.severity === 'danger').length
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -99,7 +107,7 @@ export default function ForecastAlerts() {
       </div>
 
       {/* Forecast table */}
-      {forecast.forecast_dates?.length > 0 && (
+      {forecastDates.length > 0 && (
         <div className="glass-card p-5 mb-6">
           <h3 className="chart-title mb-4">7-Day Forecast Table</h3>
           <p className="text-xs text-slate-400 mb-3">Multi-day discharge projection with confidence intervals</p>
@@ -113,17 +121,17 @@ export default function ForecastAlerts() {
                 </tr>
               </thead>
               <tbody>
-                {forecast.forecast_dates.map((date, i) => {
-                  const q = forecast.discharge_forecast?.[i]
-                  const risk = forecast.flood_risk_forecast?.[i]
-                  const isAlert = q > (forecast.flood_alert_threshold ?? 30000)
+                {forecastDates.map((date, i) => {
+                  const q = dischargeForecast[i]
+                  const risk = floodRiskForecast[i]
+                  const isAlert = q > threshold
                   return (
                     <tr key={date} className={`border-b border-slate-100 dark:border-slate-800 ${isAlert ? 'bg-red-50/40 dark:bg-red-900/10' : ''}`}>
                       <td className="py-2 px-3 font-medium text-slate-700 dark:text-slate-300">{date}</td>
                       <td className="py-2 px-3 font-semibold text-purple-600 dark:text-purple-400">{formatNumber(q, 0)}</td>
-                      <td className="py-2 px-3 text-slate-400">{formatNumber(forecast.discharge_lower?.[i], 0)}</td>
-                      <td className="py-2 px-3 text-slate-400">{formatNumber(forecast.discharge_upper?.[i], 0)}</td>
-                      <td className="py-2 px-3 text-slate-600 dark:text-slate-400">{formatNumber(forecast.area_forecast?.[i], 0)}</td>
+                      <td className="py-2 px-3 text-slate-400">{formatNumber(dischargeLower[i], 0)}</td>
+                      <td className="py-2 px-3 text-slate-400">{formatNumber(dischargeUpper[i], 0)}</td>
+                      <td className="py-2 px-3 text-slate-600 dark:text-slate-400">{formatNumber(areaForecast[i], 0)}</td>
                       <td className="py-2 px-3 text-slate-600 dark:text-slate-400">{risk != null ? (risk * 100).toFixed(1) + '%' : '—'}</td>
                       <td className="py-2 px-3">
                         {isAlert
