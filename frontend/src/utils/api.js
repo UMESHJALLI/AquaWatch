@@ -9,6 +9,7 @@ import {
   generateMockForecast,
   MOCK_ALERTS,
   MOCK_ANALYSIS_RESULT,
+  generateMockAnalysis,
 } from './mockData'
 
 const BASE = '/api'
@@ -31,7 +32,7 @@ export const api = {
     const url = qs ? `${BASE}/analyze-image?${qs}` : `${BASE}/analyze-image`
     return withFallback(
       () => axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
-      MOCK_ANALYSIS_RESULT
+      () => generateMockAnalysis('sentinel2_ganga_monsoon.jpg', params)
     )
   },
 
@@ -39,11 +40,7 @@ export const api = {
     const query = new URLSearchParams({ demo_name: name, ...params }).toString()
     return withFallback(
       () => axios.post(`${BASE}/load-demo?${query}`),
-      () => ({
-        ...MOCK_ANALYSIS_RESULT,
-        filename: name,
-        mission: params.mission || 'Sentinel-2',
-      })
+      () => generateMockAnalysis(name, params)
     )
   },
 

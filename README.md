@@ -5,25 +5,19 @@
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://reactjs.org)
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)](https://vitejs.dev)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss)](https://tailwindcss.com)
-[![IEEE Paper](https://img.shields.io/badge/IEEE%20Paper-PDF%20Included-red)](./IEEE_Research_Paper.pdf)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An operational, all-weather Earth observation and computer vision platform designed for continuous river boundary delineation, sub-canopy inundation extraction, and streamflow discharge estimation across monitored and ungauged river basins.
 
 ---
 
-## 📄 IEEE Conference & Research Publication
+## 👥 Authors & Affiliation
 
-* **Paper Title:** *A Multi-Source Satellite Imagery Framework for Water Body Segmentation and River Discharge Estimation*
 * **Authors:** 
   * **K Kausalya** (`kausalyamurthy@gmail.com`)
   * **P Nikhitha** (`pachanikhitha2004@gmail.com`)
   * **J Umesh** (`jalliumesh.j@gmail.com`)
 * **Institution:** *Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology, Avadi, Tamil Nadu, India*
-* **Files Included:**
-  * 📄 **[IEEE Research Paper PDF](./IEEE_Research_Paper.pdf)** *(Publication-ready 6-page two-column IEEE format)*
-  * 🖋️ **[IEEEtran LaTeX Source Code](./IEEE_Paper_AquaWatch.tex)** *(Ready for Overleaf / pdflatex)*
-  * 📝 **[Full Markdown Manuscript](./IEEE_Research_Paper.md)**
 
 ---
 

@@ -54,3 +54,6 @@ temp_*
 test_*
 DataSet/
 
+# Never track IEEE paper files
+IEEE_*
+*.tex

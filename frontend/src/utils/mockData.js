@@ -287,44 +287,88 @@ export const MOCK_ALERTS = [
   }
 ]
 
-export const MOCK_ANALYSIS_RESULT = {
-  filename: "sentinel2_ganga_monsoon.jpg",
-  mission: "Sentinel-2",
-  resolution_m: 10.0,
-  metrics: {
-    water_area_m2: 1245000,
-    water_area_km2: 1.245,
-    water_pixel_count: 12450,
-    total_pixels: 307200,
-    water_percentage: 40.5,
-    avg_width_m: 785.4,
-    centerline_length_m: 1585.2,
-    ndwi_mean: 0.462,
-    flood_risk_score: 0.74,
-    flood_risk_level: "High"
-  },
-  discharge: {
-    discharge_m3s: 28450.0,
-    method: "Hybrid Manning-ML (ESCI 2026 Model)",
-    flow_velocity_ms: 2.82,
-    hydraulic_radius_m: 12.8,
-    cross_section_area_m2: 10088.0,
-    bed_slope: 0.00015,
-    mannings_n: 0.032,
-    confidence_interval: {
-      lower_m3s: 25605.0,
-      upper_m3s: 31295.0
+export function generateMockAnalysis(demoName = 'sentinel2_ganga_monsoon.jpg', params = {}) {
+  const mission = params.mission || (
+    demoName.includes('planetscope') ? 'PlanetScope' :
+    demoName.includes('sar') || demoName.includes('sentinel1') ? 'Sentinel-1' :
+    demoName.includes('nisar') ? 'NISAR' : 'Sentinel-2'
+  )
+
+  const rainfall = Number(params.rainfall_mm ?? 25)
+  const soilMoisture = Number(params.soil_moisture_pct ?? 60)
+  const reservoir = Number(params.reservoir_release_m3s ?? 500)
+  const isUngauged = Boolean(params.is_ungauged)
+
+  const isNarrow = demoName.includes('planetscope')
+  const isVeg = demoName.includes('nisar') || demoName.includes('sar')
+  const baseWidth = isNarrow ? 24 : 785
+  const baseAreaKm2 = isNarrow ? 0.38 : 1.245
+
+  const forcing = (rainfall * 140 * (soilMoisture / 50)) + (reservoir * 1.1)
+  const qBase = isNarrow ? 3400 : 23500
+  const qPhys = Math.round(qBase + forcing * 0.95)
+  const qML = Math.round(qBase * 1.05 + forcing * 1.05)
+  const qFinal = Math.round(qPhys * 0.44 + qML * 0.56)
+
+  const riskRatio = qFinal / (isNarrow ? 5000 : 30000)
+  const floodRisk = riskRatio > 1.2 || rainfall > 50 ? 'Severe' : riskRatio > 0.85 || rainfall > 25 ? 'High' : 'Normal'
+  const imgUrl = `./sample-images/${demoName}`
+
+  return {
+    filename: demoName,
+    site_name: demoName.replace(/_/g, ' ').replace('.jpg', '').toUpperCase(),
+    images: {
+      original: imgUrl,
+      overlay: imgUrl,
+      water_mask: imgUrl,
+      attention_map: imgUrl,
+      centerline: imgUrl,
+      ndwi_map: imgUrl,
+      sar_polarimetric: imgUrl,
+    },
+    metrics: {
+      area_km2: baseAreaKm2,
+      area_pixels: Math.round(baseAreaKm2 * 10000),
+      avg_width_m: baseWidth,
+      min_width_m: Math.round(baseWidth * 0.6),
+      max_width_m: Math.round(baseWidth * 1.4),
+      reach_length_km: isNarrow ? 2.4 : 1.58,
+      coverage_pct: isNarrow ? 18.2 : 40.5,
+      ndwi_simulated: 0.462,
+      mndwi_simulated: 0.528,
+      awei_simulated: 0.215,
+      rvi_score: isVeg ? 1.72 : 1.34,
+      cloud_pct: 12.0,
+      satellite_mission: mission,
+      engine_mode: params.engine_mode || 'high_precision',
+      narrow_channel_detected: isNarrow,
+      flooded_veg_detected: isVeg,
+    },
+    discharge: {
+      discharge_m3s: qFinal,
+      discharge_physics: qPhys,
+      discharge_ml: qML,
+      weights: { w_phys: 0.44, w_ml: 0.56 },
+      discharge_low: Math.round(qFinal * 0.91),
+      discharge_high: Math.round(qFinal * 1.11),
+      uncertainty_sigma: Math.round(qFinal * 0.05),
+      flood_risk: floodRisk,
+      lead_time_hours: 34.5,
+      confidence_pct: 92,
+      is_ungauged: isUngauged,
+    },
+    turbidity: {
+      turbidity_score: 48.5,
+      turbidity_level: 'Moderate Turbidity',
+      turbidity_anomaly: false,
+      mean_turbidity_ntu: 48.5,
+    },
+    anomaly: {
+      anomaly_detected: floodRisk === 'Severe' || floodRisk === 'High',
+      severity: floodRisk === 'Severe' ? 'severe' : 'moderate',
+      description: 'Runoff volume expansion along reach channel',
     }
-  },
-  turbidity: {
-    mean_turbidity_ntu: 51.4,
-    category: "Moderate Turbidity",
-    ndti_mean: 0.18
-  },
-  anomaly: {
-    is_anomaly: true,
-    anomaly_score: -0.184,
-    severity: "Elevated Discharge Pulse",
-    reason: "Water area expanded by 22% compared to historical baseline"
   }
 }
+
+export const MOCK_ANALYSIS_RESULT = generateMockAnalysis('sentinel2_ganga_monsoon.jpg')

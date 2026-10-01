@@ -116,11 +116,10 @@ async def analyze_image(
     """Analyze an uploaded water body image."""
     global _last_analysis
 
-    allowed_types = {"image/jpeg", "image/png", "image/jpg", "image/webp"}
-    if file.content_type not in allowed_types:
-        raise HTTPException(status_code=400, detail="Only JPEG/PNG images are supported.")
-
-    ext = os.path.splitext(file.filename)[-1] or ".jpg"
+    allowed_exts = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".jp2"}
+    ext = os.path.splitext(file.filename)[-1].lower() or ".jpg"
+    if ext not in allowed_exts:
+        raise HTTPException(status_code=400, detail="Supported formats: GeoTIFF (.tif), JPEG 2000 (.jp2), PNG, JPEG, WEBP.")
     unique_name = f"{uuid.uuid4().hex}{ext}"
     save_path = os.path.join(UPLOADS_DIR, unique_name)
 
