@@ -11,54 +11,181 @@ export const MOCK_SITES = [
     latitude: 25.5941,
     longitude: 85.1376,
     river: "Ganga",
-    basin: "Ganga Basin",
-    description: "Primary validation site from ESCI 2026 paper. High monsoon flood dynamics with up to 48,000 m³/s peak flows.",
+    basin: "Ganga River Basin",
+    description: "Primary IEEE validation reach (Table III). Multi-braided alluvial channel with dynamic monsoonal flood pulses up to 48,000 m³/s.",
     status: "active",
     is_ungauged: false,
     latest: {
       discharge: 31250,
       water_area: 1420000,
+      water_area_ha: 1420,
+      water_area_km2: 14.2,
       avg_width: 820,
+      reach_length_km: 17.3,
       turbidity: 48.5,
-      flood_risk: 0.82
+      flood_risk: 0.82,
+      q_physics: 30800,
+      q_ml: 31600,
+      q_final: 31250,
+      confidence_pct: 94,
+      ndwi: 0.412,
+      mndwi: 0.485,
+      aweish: 0.228,
+      rvi: 1.28
+    },
+    table3: {
+      reach: "Patna Reach (Digha)",
+      basin: "Ganga River",
+      mae: 412.5,
+      rmse: 620.4,
+      nse: 0.932,
+      r2: 0.945,
+      notes: "Braided alluvial channel with dynamic monsoonal sandbars"
+    },
+    table2: {
+      miou: "91.57%",
+      dice: "0.956",
+      precision: "0.942",
+      recall: "0.970",
+      model: "Attention U-Net (Proposed)"
     }
   },
   {
-    id: "site_varanasi",
-    name: "Varanasi Ghats Station",
-    location: "Varanasi, UP",
-    latitude: 25.3176,
-    longitude: 82.9739,
-    river: "Ganga",
-    basin: "Ganga Basin",
-    description: "Urban river reach critical for turbidity, sediment load, and industrial pollution tracking.",
+    id: "site_bhadrachalam",
+    name: "Bhadrachalam Godavari Station",
+    location: "Bhadrachalam, Telangana",
+    latitude: 17.6688,
+    longitude: 80.8936,
+    river: "Godavari",
+    basin: "Godavari River Basin",
+    description: "Key IEEE validation reach (Table III). Dynamic bedform shifts and sandbar migration (n = 0.032–0.041) stabilized via Bayesian weighting.",
     status: "active",
     is_ungauged: false,
     latest: {
-      discharge: 18400,
-      water_area: 980000,
-      avg_width: 610,
-      turbidity: 62.1,
-      flood_risk: 0.45
+      discharge: 22600,
+      water_area: 1180000,
+      water_area_ha: 1180,
+      water_area_km2: 11.8,
+      avg_width: 740,
+      reach_length_km: 15.9,
+      turbidity: 58.2,
+      flood_risk: 0.74,
+      q_physics: 21900,
+      q_ml: 23100,
+      q_final: 22600,
+      confidence_pct: 93,
+      ndwi: 0.395,
+      mndwi: 0.462,
+      aweish: 0.210,
+      rvi: 1.34
+    },
+    table3: {
+      reach: "Bhadrachalam Station",
+      basin: "Godavari River",
+      mae: 284.1,
+      rmse: 415.8,
+      nse: 0.928,
+      r2: 0.938,
+      notes: "Seasonal bedform shifts (n = 0.032–0.041) stabilized by Bayesian solver"
+    },
+    table2: {
+      miou: "91.57%",
+      dice: "0.956",
+      precision: "0.942",
+      recall: "0.970",
+      model: "Attention U-Net (Proposed)"
     }
   },
   {
-    id: "site_haridwar",
-    name: "Haridwar Har Ki Pauri",
-    location: "Haridwar, Uttarakhand",
-    latitude: 29.9457,
-    longitude: 78.1642,
-    river: "Ganga",
-    basin: "Ganga Basin",
-    description: "Upper Ganga monitoring station influenced by Himalayan snowmelt and pre-monsoon surges.",
+    id: "site_rajahmundry",
+    name: "Rajahmundry Godavari Delta",
+    location: "Rajahmundry, Andhra Pradesh",
+    latitude: 17.0005,
+    longitude: 81.804,
+    river: "Godavari",
+    basin: "Godavari River Basin",
+    description: "Peak-fidelity IEEE validation reach (Table III). Peninsular delta geometry with wide alluvial margins (W/d > 60). Regulated by Dowleswaram Barrage.",
     status: "active",
     is_ungauged: false,
     latest: {
-      discharge: 6200,
-      water_area: 410000,
-      avg_width: 320,
-      turbidity: 19.4,
-      flood_risk: 0.22
+      discharge: 24700,
+      water_area: 1290000,
+      water_area_ha: 1290,
+      water_area_km2: 12.9,
+      avg_width: 950,
+      reach_length_km: 13.6,
+      turbidity: 52.3,
+      flood_risk: 0.63,
+      q_physics: 25100,
+      q_ml: 24400,
+      q_final: 24700,
+      confidence_pct: 96,
+      ndwi: 0.428,
+      mndwi: 0.501,
+      aweish: 0.235,
+      rvi: 1.19
+    },
+    table3: {
+      reach: "Rajahmundry Reach (Delta)",
+      basin: "Godavari River",
+      mae: 348.6,
+      rmse: 512.2,
+      nse: 0.936,
+      r2: 0.944,
+      notes: "Peak fidelity reach with stable alluvial geometry (W/d > 60)"
+    },
+    table2: {
+      miou: "91.57%",
+      dice: "0.956",
+      precision: "0.942",
+      recall: "0.970",
+      model: "Attention U-Net (Proposed)"
+    }
+  },
+  {
+    id: "site_vijayawada",
+    name: "Vijayawada Prakasam Barrage",
+    location: "Vijayawada, Andhra Pradesh",
+    latitude: 16.5062,
+    longitude: 80.648,
+    river: "Krishna",
+    basin: "Krishna River Basin",
+    description: "Key IEEE validation reach (Table III). Major hydraulic barrage structure on Krishna river managing irrigation and monsoonal flood spillway discharges.",
+    status: "active",
+    is_ungauged: false,
+    latest: {
+      discharge: 15400,
+      water_area: 820000,
+      water_area_ha: 820,
+      water_area_km2: 8.2,
+      avg_width: 580,
+      reach_length_km: 14.1,
+      turbidity: 41.0,
+      flood_risk: 0.38,
+      q_physics: 15100,
+      q_ml: 15600,
+      q_final: 15400,
+      confidence_pct: 94,
+      ndwi: 0.380,
+      mndwi: 0.445,
+      aweish: 0.198,
+      rvi: 1.25
+    },
+    table3: {
+      reach: "Vijayawada Reach (Barrage)",
+      basin: "Krishna River",
+      mae: 315.4,
+      rmse: 480.9,
+      nse: 0.930,
+      r2: 0.941,
+      notes: "Regulated barrage pool with automated sluice discharge tracking"
+    },
+    table2: {
+      miou: "91.57%",
+      dice: "0.956",
+      precision: "0.942",
+      recall: "0.970",
+      model: "Attention U-Net (Proposed)"
     }
   },
   {
@@ -75,47 +202,36 @@ export const MOCK_SITES = [
     latest: {
       discharge: 42100,
       water_area: 2850000,
+      water_area_ha: 2850,
+      water_area_km2: 28.5,
       avg_width: 1450,
+      reach_length_km: 19.6,
       turbidity: 78.9,
-      flood_risk: 0.91
-    }
-  },
-  {
-    id: "site_rajahmundry",
-    name: "Rajahmundry Godavari Station",
-    location: "Rajahmundry, Andhra Pradesh",
-    latitude: 17.0005,
-    longitude: 81.804,
-    river: "Godavari",
-    basin: "Godavari Basin",
-    description: "Peninsular delta river monitoring. Regulated by Dowleswaram Barrage with flash flood pulses.",
-    status: "active",
-    is_ungauged: false,
-    latest: {
-      discharge: 24700,
-      water_area: 1290000,
-      avg_width: 950,
-      turbidity: 52.3,
-      flood_risk: 0.63
-    }
-  },
-  {
-    id: "site_vijayawada",
-    name: "Vijayawada Prakasam Barrage",
-    location: "Vijayawada, Andhra Pradesh",
-    latitude: 16.5062,
-    longitude: 80.648,
-    river: "Krishna",
-    basin: "Krishna Basin",
-    description: "Key hydraulic structure on Krishna river managing irrigation and municipal releases.",
-    status: "active",
-    is_ungauged: false,
-    latest: {
-      discharge: 15400,
-      water_area: 820000,
-      avg_width: 580,
-      turbidity: 41.0,
-      flood_risk: 0.38
+      flood_risk: 0.91,
+      q_physics: 41500,
+      q_ml: 42600,
+      q_final: 42100,
+      confidence_pct: 91,
+      ndwi: 0.445,
+      mndwi: 0.512,
+      aweish: 0.242,
+      rvi: 1.48
+    },
+    table3: {
+      reach: "Guwahati Reach",
+      basin: "Brahmaputra River",
+      mae: 520.1,
+      rmse: 710.3,
+      nse: 0.925,
+      r2: 0.935,
+      notes: "Supercritical monsoon braided flow; severe sandbar migration"
+    },
+    table2: {
+      miou: "91.57%",
+      dice: "0.956",
+      precision: "0.942",
+      recall: "0.970",
+      model: "Attention U-Net (Proposed)"
     }
   },
   {
@@ -324,12 +440,100 @@ export function generateMockAnalysis(demoName = 'sentinel2_ganga_monsoon.jpg', p
   const isUngauged = Boolean(params.is_ungauged)
 
   const isNarrow = demoName.includes('planetscope')
-  const isVeg = demoName.includes('nisar') || demoName.includes('sar')
-  const baseWidth = isNarrow ? 24 : 785
-  const baseAreaKm2 = isNarrow ? 0.38 : 1.245
+  const isVeg = demoName.includes('nisar') || demoName.includes('flooded_veg')
+  
+  // River-specific geometry and baseline values
+  let baseWidth = 820
+  let baseAreaKm2 = 14.2
+  let reachLengthKm = 17.3
+  let qBase = 31250
+  let siteName = 'PATNA REACH — GANGA RIVER'
+  let table3Info = {
+    reach: 'Patna Reach (Digha)',
+    basin: 'Ganga River Basin',
+    mae: 412.5,
+    rmse: 620.4,
+    nse: 0.932,
+    r2: 0.945,
+    notes: 'Braided alluvial channel with dynamic monsoonal sandbars'
+  }
+
+  const dName = demoName.toLowerCase()
+  if (dName.includes('bhadrachalam') || dName.includes('flood_event')) {
+    siteName = 'BHADRACHALAM STATION — GODAVARI RIVER'
+    baseWidth = 740
+    baseAreaKm2 = 11.8
+    reachLengthKm = 15.9
+    qBase = 22600
+    table3Info = {
+      reach: 'Bhadrachalam Station',
+      basin: 'Godavari River Basin',
+      mae: 284.1,
+      rmse: 415.8,
+      nse: 0.928,
+      r2: 0.938,
+      notes: 'Seasonal bedform shifts (n = 0.032–0.041) stabilized by Bayesian solver'
+    }
+  } else if (dName.includes('rajahmundry') || dName.includes('river_ganga_sample')) {
+    siteName = 'RAJAHMUNDRY DELTA — GODAVARI RIVER'
+    baseWidth = 950
+    baseAreaKm2 = 12.9
+    reachLengthKm = 13.6
+    qBase = 24700
+    table3Info = {
+      reach: 'Rajahmundry Reach (Delta)',
+      basin: 'Godavari River Basin',
+      mae: 348.6,
+      rmse: 512.2,
+      nse: 0.936,
+      r2: 0.944,
+      notes: 'Peak fidelity reach with stable alluvial geometry (W/d > 60)'
+    }
+  } else if (dName.includes('vijayawada') || dName.includes('reservoir_sample')) {
+    siteName = 'VIJAYAWADA PRAKASAM BARRAGE — KRISHNA RIVER'
+    baseWidth = 580
+    baseAreaKm2 = 8.2
+    reachLengthKm = 14.1
+    qBase = 15400
+    table3Info = {
+      reach: 'Vijayawada Reach (Barrage)',
+      basin: 'Krishna River Basin',
+      mae: 315.4,
+      rmse: 480.9,
+      nse: 0.930,
+      r2: 0.941,
+      notes: 'Regulated barrage pool with automated sluice discharge tracking'
+    }
+  } else if (dName.includes('guwahati')) {
+    siteName = 'GUWAHATI BRAHMAPUTRA REACH'
+    baseWidth = 1450
+    baseAreaKm2 = 28.5
+    reachLengthKm = 19.6
+    qBase = 42100
+    table3Info = {
+      reach: 'Guwahati Reach',
+      basin: 'Brahmaputra River Basin',
+      mae: 520.1,
+      rmse: 710.3,
+      nse: 0.925,
+      r2: 0.935,
+      notes: 'High sediment discharge channel with extreme monsoonal flood pulses'
+    }
+  } else if (isNarrow) {
+    siteName = 'NARROW TRIBUTARY CHANNEL (<30M)'
+    baseWidth = 24
+    baseAreaKm2 = 0.38
+    reachLengthKm = 2.4
+    qBase = 3400
+  } else if (isVeg) {
+    siteName = 'SUBMERGED VEGETATION CANOPY (SAR RVI)'
+    baseWidth = 610
+    baseAreaKm2 = 2.15
+    reachLengthKm = 3.5
+    qBase = 14800
+  }
 
   const forcing = (rainfall * 140 * (soilMoisture / 50)) + (reservoir * 1.1)
-  const qBase = isNarrow ? 3400 : 23500
   const qPhys = Math.round(qBase + forcing * 0.95)
   const qML = Math.round(qBase * 1.05 + forcing * 1.05)
   const qFinal = Math.round(qPhys * 0.44 + qML * 0.56)
@@ -340,7 +544,7 @@ export function generateMockAnalysis(demoName = 'sentinel2_ganga_monsoon.jpg', p
 
   return {
     filename: demoName,
-    site_name: demoName.replace(/_/g, ' ').replace('.jpg', '').toUpperCase(),
+    site_name: siteName,
     images: {
       original: imgUrl,
       overlay: imgUrl,
@@ -356,7 +560,7 @@ export function generateMockAnalysis(demoName = 'sentinel2_ganga_monsoon.jpg', p
       avg_width_m: baseWidth,
       min_width_m: Math.round(baseWidth * 0.6),
       max_width_m: Math.round(baseWidth * 1.4),
-      reach_length_km: isNarrow ? 2.4 : 1.58,
+      reach_length_km: reachLengthKm,
       coverage_pct: isNarrow ? 18.2 : 40.5,
       ndwi_simulated: 0.462,
       mndwi_simulated: 0.528,
@@ -391,6 +595,15 @@ export function generateMockAnalysis(demoName = 'sentinel2_ganga_monsoon.jpg', p
       anomaly_detected: floodRisk === 'Severe' || floodRisk === 'High',
       severity: floodRisk === 'Severe' ? 'severe' : 'moderate',
       description: 'Runoff volume expansion along reach channel',
+    },
+    table3: table3Info,
+    table2: {
+      model: 'Attention U-Net (Proposed)',
+      miou: '91.57%',
+      dice: '0.956',
+      precision: '0.942',
+      recall: '0.970',
+      notes: 'Soft spatial-spectral gating (αatt); suppresses cloud shadows and terrain artifacts'
     }
   }
 }
