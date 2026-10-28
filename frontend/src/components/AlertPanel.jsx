@@ -59,12 +59,12 @@ export default function AlertPanel({ alerts = [], onAck, loading = false }) {
             const isSevere = alert.severity === 'severe'
             const isWarning = alert.severity === 'warning'
             const borderCol = isSevere
-              ? 'border-rose-200 dark:border-rose-900/60 bg-rose-50/60 dark:bg-rose-950/20'
+              ? 'border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/20'
               : isWarning
-              ? 'border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20'
-              : 'border-sky-200 dark:border-sky-900/60 bg-sky-50/60 dark:bg-sky-950/20'
+              ? 'border-sky-200 dark:border-sky-900/60 bg-sky-50/70 dark:bg-sky-950/20'
+              : 'border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/20'
 
-            const iconCol = isSevere ? 'text-rose-500' : isWarning ? 'text-amber-500' : 'text-sky-500'
+            const iconCol = isSevere ? 'text-amber-500' : isWarning ? 'text-sky-500' : 'text-slate-400'
 
             return (
               <motion.div
@@ -77,13 +77,9 @@ export default function AlertPanel({ alerts = [], onAck, loading = false }) {
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-1.5">
-                    {isSevere ? (
-                      <AlertCircle size={15} className={iconCol} />
-                    ) : (
-                      <AlertTriangle size={15} className={iconCol} />
-                    )}
+                    <AlertTriangle size={15} className={iconCol} />
                     <span className="font-semibold text-xs text-slate-800 dark:text-slate-100">
-                      {alert.alert_type}
+                      {alert.alert_type || alert.title}
                     </span>
                   </div>
                   <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">

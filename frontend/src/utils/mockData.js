@@ -396,34 +396,37 @@ export const MOCK_ALERTS = [
     id: "alert_01",
     site_id: "site_patna",
     site_name: "Patna Ganga Station",
-    level: "High",
-    title: "Monsoon Inundation Warning",
-    message: "Discharge exceeded 31,000 m³/s threshold. Satellite MNDWI indicates 14.2% surface expansion along north embankments.",
+    level: "Advisory",
+    alert_type: "Monsoon Inundation Advisory",
+    title: "Monsoon Inundation Advisory",
+    message: "Discharge reached 31,000 m³/s threshold. Satellite MNDWI indicates 14.2% surface expansion along north embankments.",
     timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
     acknowledged: false,
-    severity: "severe"
+    severity: "warning"
   },
   {
     id: "alert_02",
     site_id: "site_guwahati",
     site_name: "Guwahati Brahmaputra Reach",
-    level: "Severe",
-    title: "Critical Overbank Flood Pulse",
+    level: "Advisory",
+    alert_type: "Overbank Flow Pulse",
+    title: "Overbank Flow Pulse",
     message: "Radar backscatter drop indicates submerged vegetation across 2,850,000 m² channel zone. Manning discharge ~42,100 m³/s.",
     timestamp: new Date(Date.now() - 3600000 * 6).toISOString(),
     acknowledged: false,
-    severity: "severe"
+    severity: "warning"
   },
   {
     id: "alert_03",
     site_id: "site_varanasi",
     site_name: "Varanasi Ghats Station",
-    level: "Moderate",
-    title: "Elevated Turbidity & Sediment Pulse",
+    level: "Notice",
+    alert_type: "Elevated Turbidity Pulse",
+    title: "Elevated Turbidity Pulse",
     message: "Optical reflectance index shows turbidity spike (62.1 NTU). Upstream surface runoff ingress detected.",
     timestamp: new Date(Date.now() - 3600000 * 18).toISOString(),
     acknowledged: true,
-    severity: "warning"
+    severity: "info"
   }
 ]
 

@@ -16,11 +16,20 @@ const BASE = '/api'
 
 // Helper to attempt API call and fall back to mock data
 async function withFallback(apiCall, fallbackData) {
+  // If running statically on GitHub Pages or file protocol, return offline mock data immediately without failing 404 network requests
+  const isStatic =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.includes('github.io') || window.location.protocol === 'file:')
+
+  if (isStatic) {
+    return { data: typeof fallbackData === 'function' ? fallbackData() : fallbackData }
+  }
+
   try {
     const res = await apiCall()
     return res
   } catch (err) {
-    // If running statically on GitHub Pages or backend is down, return mock
+    // If backend is down, return mock
     return { data: typeof fallbackData === 'function' ? fallbackData() : fallbackData }
   }
 }

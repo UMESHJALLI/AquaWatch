@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw, Download } from 'lucide-react'
+import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw } from 'lucide-react'
 import { api, formatNumber } from '../utils/api'
 import MetricCard from '../components/MetricCard'
 import DischargeChart from '../charts/DischargeChart'
@@ -80,9 +80,6 @@ export default function Dashboard() {
           <button onClick={handleRefresh} disabled={refreshing} className="btn-ghost gap-1.5" title="Refresh">
             <RefreshCw size={15} className={refreshing ? 'animate-spin' : ''} />
           </button>
-          <a href="/api/download-report" target="_blank" className="btn-secondary text-xs py-2 px-3">
-            <Download size={14} /> Report
-          </a>
         </div>
       </div>
 
