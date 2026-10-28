@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Waves, LayoutDashboard, Upload, MapPin, TrendingUp, Menu, X } from 'lucide-react'
+import { Waves, LayoutDashboard, Upload, MapPin, TrendingUp, Award, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { label: 'Upload & Analyze', path: '/upload', icon: Upload },
   { label: 'Site Monitor', path: '/sites', icon: MapPin },
   { label: 'Forecast', path: '/forecast', icon: TrendingUp },
+  { label: 'Paper Benchmarks', path: '/methodology', icon: Award },
 ]
 
 export default function Navbar({ darkMode, setDarkMode }) {

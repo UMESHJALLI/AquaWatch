@@ -57,3 +57,16 @@ DataSet/
 # Never track IEEE paper files
 IEEE_*
 *.tex
+figures/
+build_ieee_paper.py
+build_ieee_pdf.py
+generate_paper_figures.py
+generate_diagram_images.py
+generate_simple_comparison_diagram.py
+generate_perfect_architecture_and_flow.py
+compile_perfect_ieee_pdf.py
+
+
+
+
+

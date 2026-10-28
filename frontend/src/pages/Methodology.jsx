@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { FlaskConical, Brain, Waves, BarChart3, AlertTriangle, Eye } from 'lucide-react'
+import IEEEBenchmarks from '../components/IEEEBenchmarks'
 
 const sections = [
   {
@@ -138,6 +139,11 @@ export default function Methodology() {
             )}
           </motion.div>
         ))}
+      </div>
+
+      {/* IEEE Benchmarks (Table II & Table III) */}
+      <div className="mt-8">
+        <IEEEBenchmarks />
       </div>
 
       {/* Tech stack */}

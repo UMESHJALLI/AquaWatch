@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import UploadAnalysis from './pages/UploadAnalysis'
 import SiteMonitoring from './pages/SiteMonitoring'
 import ForecastAlerts from './pages/ForecastAlerts'
+import Methodology from './pages/Methodology'
 
 function App() {
   useEffect(() => {
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/upload" element={<UploadAnalysis />} />
                     <Route path="/sites" element={<SiteMonitoring />} />
                     <Route path="/forecast" element={<ForecastAlerts />} />
+                    <Route path="/methodology" element={<Methodology />} />
                   </Routes>
                 </main>
               </>

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw, Download } from 'lucide-react'
+import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw, Download, FileText } from 'lucide-react'
 import { api, formatNumber } from '../utils/api'
 import MetricCard from '../components/MetricCard'
 import DischargeChart from '../charts/DischargeChart'
 import TurbidityChart from '../charts/TurbidityChart'
 import MapView from '../components/MapView'
+import IEEEBenchmarks from '../components/IEEEBenchmarks'
 import toast from 'react-hot-toast'
 
 export default function Dashboard() {
@@ -76,6 +77,13 @@ export default function Dashboard() {
           <button onClick={handleRefresh} disabled={refreshing} className="btn-ghost gap-1.5" title="Refresh">
             <RefreshCw size={15} className={refreshing ? 'animate-spin' : ''} />
           </button>
+          <a
+            href="#ieee-benchmarks"
+            className="btn-secondary text-xs py-2 px-3 flex items-center gap-1.5 bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-900/50"
+            title="View Paper Benchmarks Table II & III"
+          >
+            <FileText size={14} /> Table II & III Outcomes
+          </a>
           <a href="/api/download-report" target="_blank" className="btn-secondary text-xs py-2 px-3">
             <Download size={14} /> Report
           </a>
@@ -144,6 +152,9 @@ export default function Dashboard() {
         </div>
         <MapView sites={sites} selectedSite={selectedSite} onSiteClick={id => setSelectedSite(id)} />
       </div>
+
+      {/* IEEE Paper Outcomes: Table II & Table III */}
+      <IEEEBenchmarks />
     </div>
   )
 }
