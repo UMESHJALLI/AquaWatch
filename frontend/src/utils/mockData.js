@@ -36,10 +36,10 @@ export const MOCK_SITES = [
     table3: {
       reach: "Patna Reach (Digha)",
       basin: "Ganga River",
-      mae: 412.5,
-      rmse: 620.4,
-      nse: 0.932,
-      r2: 0.945,
+      mae: 542.8,
+      rmse: 761.5,
+      nse: 0.928,
+      r2: 0.946,
       notes: "Braided alluvial channel with dynamic monsoonal sandbars"
     },
     table2: {
@@ -82,10 +82,10 @@ export const MOCK_SITES = [
     table3: {
       reach: "Bhadrachalam Station",
       basin: "Godavari River",
-      mae: 284.1,
-      rmse: 415.8,
-      nse: 0.928,
-      r2: 0.938,
+      mae: 495.3,
+      rmse: 698.2,
+      nse: 0.933,
+      r2: 0.952,
       notes: "Seasonal bedform shifts (n = 0.032–0.041) stabilized by Bayesian solver"
     },
     table2: {
@@ -128,10 +128,10 @@ export const MOCK_SITES = [
     table3: {
       reach: "Rajahmundry Reach (Delta)",
       basin: "Godavari River",
-      mae: 348.6,
-      rmse: 512.2,
-      nse: 0.936,
-      r2: 0.944,
+      mae: 518.6,
+      rmse: 724.8,
+      nse: 0.935,
+      r2: 0.954,
       notes: "Peak fidelity reach with stable alluvial geometry (W/d > 60)"
     },
     table2: {
@@ -174,10 +174,10 @@ export const MOCK_SITES = [
     table3: {
       reach: "Vijayawada Reach (Barrage)",
       basin: "Krishna River",
-      mae: 315.4,
-      rmse: 480.9,
-      nse: 0.930,
-      r2: 0.941,
+      mae: 567.3,
+      rmse: 787.5,
+      nse: 0.924,
+      r2: 0.948,
       notes: "Regulated barrage pool with automated sluice discharge tracking"
     },
     table2: {
