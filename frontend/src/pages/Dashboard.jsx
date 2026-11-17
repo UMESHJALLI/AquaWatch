@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw } from 'lucide-react'
+import { Droplets, Waves, Activity, AlertTriangle, Wind, MapPin, RefreshCw, Info, HelpCircle } from 'lucide-react'
 import { api, formatNumber } from '../utils/api'
 import MetricCard from '../components/MetricCard'
 import DischargeChart from '../charts/DischargeChart'
 import TurbidityChart from '../charts/TurbidityChart'
 import MapView from '../components/MapView'
+import DataGuideSection from '../components/DataGuideSection'
 import toast from 'react-hot-toast'
 
 export default function Dashboard() {
@@ -98,7 +99,10 @@ export default function Dashboard() {
         </motion.div>
       )}
 
-      {/* Metric cards with entire descriptive names */}
+      {/* Comprehensive Plain-English Hydrological Data Guide */}
+      <DataGuideSection defaultOpen={false} />
+
+      {/* Metric cards with entire descriptive names and interactive info guides */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <MetricCard
           title="Water Surface Area"
@@ -108,6 +112,12 @@ export default function Dashboard() {
           color="sky"
           loading={loading}
           subtitle={latestAreaKm2 ? `${latestAreaKm2} km²` : 'Surface Area'}
+          info={{
+            what: 'Total open water surface area detected across the monitored river reach.',
+            range: 'Normal reach baseline: 800 – 1,500 ha depending on seasonal rainfall.',
+            alert: '> 2,000 ha (+35% expansion) indicates active floodplain inundation.',
+            how: 'Counted from 10m Sentinel-2 / Sentinel-1 binary segmentation mask pixels.'
+          }}
         />
         <MetricCard
           title="Mean Channel Width (W)"
@@ -117,6 +127,12 @@ export default function Dashboard() {
           color="teal"
           loading={loading}
           subtitle={latest.reach_length_km ? `Reach: ${latest.reach_length_km} km` : 'Channel Top Width'}
+          info={{
+            what: 'Average orthogonal bank-to-bank channel width along the surveyed reach.',
+            range: 'Standard natural channel: 500 – 850 m during normal river stages.',
+            alert: '> 1,100 m signals overbank discharge spilling past natural levees.',
+            how: 'Extracted via Zhang-Suen morphological skeleton with 10m normal transects.'
+          }}
         />
         <MetricCard
           title="Estimated River Discharge (Q)"
@@ -126,6 +142,12 @@ export default function Dashboard() {
           color="purple"
           loading={loading}
           subtitle="Hybrid Model (Eq. 9)"
+          info={{
+            what: 'Total volume of water flowing through the river reach per second (1 m³/s = 1,000 L/s).',
+            range: 'Non-monsoon: 2,000 – 8,000 m³/s; Normal monsoon: 15,000 – 25,000 m³/s.',
+            alert: '> 30,000 m³/s triggers flood warning; > 42,000 m³/s triggers evacuation emergencies.',
+            how: 'Hybrid physics-AI: Manning equation fused with Gradient Boosted Trees via Bayesian variance weighting.'
+          }}
         />
         <MetricCard
           title="Water Turbidity Index"
@@ -135,6 +157,12 @@ export default function Dashboard() {
           color="amber"
           loading={loading}
           subtitle="Calibrated Index"
+          info={{
+            what: 'Relative suspended sediment concentration, cloudiness, and water clarity.',
+            range: '< 25 = Clear / Low sediment; 25 – 55 = Moderate natural runoff.',
+            alert: '> 70 = High erosion / heavy silt; > 85 = Severe post-storm debris slurry.',
+            how: 'Satellite spectral reflectance combining Red/Blue channel ratio, saturation, and Laplacian roughness.'
+          }}
         />
         <MetricCard
           title="Early Flood Hazard Risk"
@@ -144,6 +172,12 @@ export default function Dashboard() {
           loading={loading}
           badge={{ label: floodRisk, className: `badge-${floodColor === 'green' ? 'success' : floodColor === 'amber' ? 'warning' : 'danger'}` }}
           subtitle={floodRisk === 'Severe' ? 'Critical Inundation' : floodRisk === 'High' ? 'Overbank Flow' : 'Normal Flow'}
+          info={{
+            what: 'Current composite probability of overbank flooding or dam overflow.',
+            range: 'Low (< 40%), Moderate (40% – 70%), High (> 70%), Severe (> 85%).',
+            alert: 'High / Severe activates pre-release reservoir alerts and village evacuation notices.',
+            how: 'Multivariate Isolation Forest model evaluating width, discharge, upstream rain, and soil moisture.'
+          }}
         />
         <MetricCard
           title="Hydrological Anomalies Detected"
@@ -153,7 +187,26 @@ export default function Dashboard() {
           color={chartData.datasets?.anomaly_flags?.some(Boolean) ? 'red' : 'green'}
           loading={loading}
           subtitle="Last 60 days"
+          info={{
+            what: 'Unusual or extreme statistical deviations from historical seasonal trends.',
+            range: '0 events = Normal flow within expected seasonal boundaries.',
+            alert: 'Flags sudden flash floods, unannounced dam releases, or sensor noise spikes.',
+            how: 'Unsupervised Machine Learning (Isolation Forest) with 2.5σ z-score boundary verification.'
+          }}
         />
+      </div>
+
+      {/* Educational Banner above Charts */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 mb-4 rounded-xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-xs">
+        <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+          <Info size={14} className="text-sky-500 flex-shrink-0" />
+          <span>
+            <strong>How to read these charts:</strong> Blue area represents the 95% confidence interval of flow. Hover over any point to inspect historical discharge (Q in m³/s) and turbidity (0-100 score).
+          </span>
+        </div>
+        <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+          60-Day Trailing Telemetry
+        </span>
       </div>
 
       {/* Charts row */}

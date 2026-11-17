@@ -86,10 +86,66 @@ export default function ForecastAlerts() {
 
       {/* Forecast KPIs */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-        <MetricCard title="Peak Discharge" value={formatNumber(maxDischarge, 0)} unit="m³/s" icon={TrendingUp} color="purple" loading={loading} subtitle="7-day max" />
-        <MetricCard title="Avg Discharge" value={formatNumber(avgDischarge, 0)} unit="m³/s" icon={TrendingUp} color="sky" loading={loading} subtitle="7-day mean" />
-        <MetricCard title="Peak Flow Days" value={floodTriggerDays} unit="days" icon={TrendingUp} color={floodTriggerDays > 0 ? 'amber' : 'green'} loading={loading} subtitle="Above baseline" />
-        <MetricCard title="Max Flood Risk" value={maxRisk != null ? (maxRisk * 100).toFixed(0) : '—'} unit="%" icon={AlertTriangle} color={maxRisk > 0.7 ? 'amber' : 'green'} loading={loading} />
+        <MetricCard
+          title="Peak Discharge"
+          value={formatNumber(maxDischarge, 0)}
+          unit="m³/s"
+          icon={TrendingUp}
+          color="purple"
+          loading={loading}
+          subtitle="7-day max"
+          info={{
+            what: 'Projected maximum volumetric river flow rate over the next 7 days.',
+            range: 'Normal monsoon peak: 15,000 – 25,000 m³/s.',
+            alert: '> 30,000 m³/s requires dam spillway pre-release preparation.',
+            how: 'Linear extrapolation of recent 14-day flow slope combined with upstream precipitation grids.'
+          }}
+        />
+        <MetricCard
+          title="Avg Discharge"
+          value={formatNumber(avgDischarge, 0)}
+          unit="m³/s"
+          icon={TrendingUp}
+          color="sky"
+          loading={loading}
+          subtitle="7-day mean"
+          info={{
+            what: 'Expected daily average river discharge over the upcoming 7-day forecast window.',
+            range: 'Dry season: 2,000 – 6,000 m³/s; Monsoon: 12,000 – 20,000 m³/s.',
+            alert: 'Steady upward trend signals continuous catchment storm runoff filling the river basin.',
+            how: 'Integrated 7-day moving window projection.'
+          }}
+        />
+        <MetricCard
+          title="Peak Flow Days"
+          value={floodTriggerDays}
+          unit="days"
+          icon={TrendingUp}
+          color={floodTriggerDays > 0 ? 'amber' : 'green'}
+          loading={loading}
+          subtitle="Above baseline"
+          info={{
+            what: 'Number of upcoming forecast days projected to surpass the official flood warning threshold.',
+            range: '0 days = Flow remains safely within river channel banks.',
+            alert: '≥ 1 day triggers emergency flood watch protocols for district collectors.',
+            how: 'Days where predicted discharge exceeds site flood threshold (e.g. 30,000 m³/s).'
+          }}
+        />
+        <MetricCard
+          title="Max Flood Risk"
+          value={maxRisk != null ? (maxRisk * 100).toFixed(0) : '—'}
+          unit="%"
+          icon={AlertTriangle}
+          color={maxRisk > 0.7 ? 'amber' : 'green'}
+          loading={loading}
+          subtitle={maxRisk > 0.7 ? 'High Hazard' : 'Routine Flow'}
+          info={{
+            what: 'Peak projected flood probability across the entire 7-day window.',
+            range: '< 40%: Routine; 40% – 70%: Moderate; > 70%: High hazard.',
+            alert: '> 70% alerts barrage engineers to plan controlled reservoir releases.',
+            how: 'Evaluated by multivariate Isolation Forest across projected flow and soil saturation.'
+          }}
+        />
       </div>
 
       {/* Forecast chart */}

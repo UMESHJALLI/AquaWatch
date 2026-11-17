@@ -248,20 +248,21 @@ export default function UploadAnalysis() {
             <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs">
               <div>
                 <span className="font-semibold text-slate-700 dark:text-slate-200">Ungauged Basin Solver</span>
-                <p className="text-[10px] text-slate-400">Leopold-Maddock regional hydraulic geometry</p>
+                <p className="text-[10px] text-slate-400">Leopold-Maddock regional hydraulic geometry (No ground sensor needed)</p>
               </div>
               <input
                 type="checkbox"
                 checked={isUngauged}
                 onChange={e => setIsUngauged(e.target.checked)}
                 className="w-4 h-4 accent-sky-500 rounded cursor-pointer"
+                title="Toggle ungauged river reach estimation without physical river gauges"
               />
             </div>
           </div>
 
           {/* Real-Time Hydrological Ingestion */}
           <div className="glass-card p-5">
-            <h3 className="chart-title mb-3 flex items-center justify-between">
+            <h3 className="chart-title mb-2 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <CloudRain size={14} className="text-purple-500" /> Real-Time Hydrology Telemetry
               </span>
@@ -269,11 +270,14 @@ export default function UploadAnalysis() {
                 Runoff Forcing
               </span>
             </h3>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 leading-snug">
+              Simulate upstream monsoon storm rainfall, ground saturation, or barrage releases to see real-time impact on flood risk:
+            </p>
 
             <div className="space-y-3.5 text-xs">
               <div>
                 <div className="flex justify-between mb-1 text-slate-600 dark:text-slate-300">
-                  <span>Precipitation (Rainfall P):</span>
+                  <span title="Basin-wide storm rainfall from GPM satellite">Precipitation (Rainfall P):</span>
                   <strong className="font-mono">{rainfallMm} mm/day</strong>
                 </div>
                 <input
@@ -285,7 +289,7 @@ export default function UploadAnalysis() {
 
               <div>
                 <div className="flex justify-between mb-1 text-slate-600 dark:text-slate-300">
-                  <span>Soil Moisture Saturation:</span>
+                  <span title="SMAP soil moisture: >70% causes 100% immediate runoff">Soil Moisture Saturation:</span>
                   <strong className="font-mono">{soilMoisturePct}%</strong>
                 </div>
                 <input
@@ -297,7 +301,7 @@ export default function UploadAnalysis() {
 
               <div>
                 <div className="flex justify-between mb-1 text-slate-600 dark:text-slate-300">
-                  <span>Upstream Reservoir Release:</span>
+                  <span title="Controlled flow released from upstream dams/barrages">Upstream Reservoir Release:</span>
                   <strong className="font-mono">{reservoirRelease} m³/s</strong>
                 </div>
                 <input
@@ -393,6 +397,12 @@ export default function UploadAnalysis() {
                   icon={CheckCircle}
                   color="sky"
                   loading={loading}
+                  info={{
+                    what: 'Total open water surface area detected in the scene.',
+                    range: '1 ha = 10,000 m² (approx 1.4 football fields). 100 ha = 1 km².',
+                    alert: 'Sudden >30% expansion signals overbank flood inundation.',
+                    how: 'Sum of 10m satellite pixels classified as water by Attention U-Net.'
+                  }}
                 />
                 <MetricCard
                   title="Mean Channel Width (W)"
@@ -402,6 +412,12 @@ export default function UploadAnalysis() {
                   icon={CheckCircle}
                   color={m.narrow_channel_detected ? 'amber' : 'teal'}
                   loading={loading}
+                  info={{
+                    what: 'Average orthogonal top width of the active river flow channel.',
+                    range: 'Natural braided reaches vary from 300m to 1,200m.',
+                    alert: 'Width spikes indicate water breaching natural banks and levees.',
+                    how: 'Zhang-Suen centerline skeletonization with normal transects every 10m.'
+                  }}
                 />
                 <MetricCard
                   title="Estimated Discharge (Q)"
@@ -411,6 +427,12 @@ export default function UploadAnalysis() {
                   icon={CheckCircle}
                   color="purple"
                   loading={loading}
+                  info={{
+                    what: 'Volumetric river flow rate (1 m³/s = 1,000 liters/second).',
+                    range: 'Low flow: 2,000 – 8,000 m³/s; Monsoon: 15,000 – 30,000 m³/s.',
+                    alert: '> 30,000 m³/s triggers official flood warning status.',
+                    how: 'Bayesian minimum-variance fusion of Manning hydraulics and GBDT regressor.'
+                  }}
                 />
                 <MetricCard
                   title="Turbidity Index"
@@ -420,6 +442,12 @@ export default function UploadAnalysis() {
                   icon={CheckCircle}
                   color={t.turbidity_anomaly ? 'red' : 'amber'}
                   loading={loading}
+                  info={{
+                    what: 'Water sediment cloudiness and suspended matter concentration.',
+                    range: '0 – 25: Clear water; 26 – 55: Moderate natural runoff.',
+                    alert: '> 70: Heavy soil erosion; > 85: Severe flood debris plume.',
+                    how: 'Multi-band spectral reflectance combining Red/Blue ratio and HSV saturation.'
+                  }}
                 />
                 <MetricCard
                   title="Early Flood Risk"
@@ -428,6 +456,12 @@ export default function UploadAnalysis() {
                   icon={AlertTriangle}
                   color={d.flood_risk === 'Severe' ? 'red' : d.flood_risk === 'High' ? 'red' : d.flood_risk === 'Moderate' ? 'amber' : 'green'}
                   loading={loading}
+                  info={{
+                    what: 'Composite real-time danger level of river flooding.',
+                    range: 'Low (< 40%), Moderate (40% – 70%), High (> 70%), Severe (> 85%).',
+                    alert: 'High / Severe activates emergency pre-release protocols.',
+                    how: 'Multivariate Isolation Forest evaluating flow, width, rain, and soil saturation.'
+                  }}
                 />
                 <MetricCard
                   title="Canopy / Flooding"
@@ -436,6 +470,12 @@ export default function UploadAnalysis() {
                   icon={ShieldCheck}
                   color={m.flooded_veg_detected ? 'amber' : 'green'}
                   loading={loading}
+                  info={{
+                    what: 'Detection of floodwater hidden beneath forest and jungle tree canopies.',
+                    range: 'Clear = Open surface water or dry canopy.',
+                    alert: 'Detected = Flooding submerged under trees where cameras cannot see.',
+                    how: 'Polarimetric SAR (Sentinel-1 / NISAR) Radar Vegetation Index (RVI).'
+                  }}
                 />
               </motion.div>
             )}
@@ -452,11 +492,11 @@ export default function UploadAnalysis() {
                   {m.satellite_mission} · {m.engine_mode === 'high_precision' ? 'Attention U-Net' : 'Agency Fast'}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mb-4">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
                 Derived water indices combined with C-band / L-band SAR polarimetric backscatter.
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                 {[
                   { label: 'NDWI (McFeeters)', key: 'ndwi_simulated', desc: 'Normalized Diff. Water Index' },
                   { label: 'MNDWI (Xu)', key: 'mndwi_simulated', desc: 'Modified SWIR Water Index' },
@@ -464,7 +504,7 @@ export default function UploadAnalysis() {
                   { label: 'SAR RVI Polarimetric', key: 'rvi_score', desc: 'Radar Vegetation Index' },
                 ].map(({ label, key, desc }) => (
                   <div key={key} className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-100 dark:border-slate-800">
-                    <p className="text-[11px] text-slate-400 mb-1">{label}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1 font-medium">{label}</p>
                     <p className="text-lg font-bold font-display text-sky-600 dark:text-sky-400">
                       {m[key] != null ? m[key].toFixed(3) : '—'}
                     </p>
@@ -472,13 +512,21 @@ export default function UploadAnalysis() {
                   </div>
                 ))}
               </div>
+
+              {/* Plain-English Spectral Interpretation Banner */}
+              <div className="p-2.5 rounded-lg bg-sky-50/70 dark:bg-sky-950/30 border border-sky-100 dark:border-sky-900/50 text-[11px] text-slate-600 dark:text-slate-300 flex items-start gap-2">
+                <span className="font-semibold text-sky-700 dark:text-sky-300 flex-shrink-0">💡 How to interpret:</span>
+                <span>
+                  <strong>Values &gt; 0.0</strong> confirm open water presence (deep water typically scores +0.3 to +0.6; negative values represent dry land/vegetation). <strong>SAR RVI &gt; 1.0</strong> confirms water submerged beneath forest tree canopies.
+                </span>
+              </div>
             </motion.div>
           )}
 
           {/* Hybrid Discharge Breakdown */}
           {result && !loading && d.discharge_m3s != null && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-5">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2">
                 <h3 className="chart-title">Uncertainty-Weighted Hybrid Discharge Breakdown</h3>
                 {d.is_ungauged && (
                   <span className="badge badge-warning text-[10px]">
@@ -486,28 +534,34 @@ export default function UploadAnalysis() {
                   </span>
                 )}
               </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                AquaWatch fuses Manning hydraulic physics with machine learning using Bayesian minimum-variance weights (w_phys and w_ml).
+              </p>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
-                  <p className="text-xs text-slate-400 mb-1">Manning Hydraulics</p>
+                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium">Manning Hydraulics</p>
                   <p className="text-xl font-bold font-display text-sky-500">{formatNumber(d.discharge_physics, 0)}</p>
-                  <p className="text-[10px] text-slate-400">m³/s (w: {d.weights?.w_phys})</p>
+                  <p className="text-[10px] text-slate-400">m³/s (Weight: {d.weights?.w_phys})</p>
+                  <p className="text-[9px] text-slate-400 mt-1">Channel shape & slope</p>
                 </div>
-                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
-                  <p className="text-xs text-slate-400 mb-1">Data-Driven ML</p>
+                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium">Data-Driven ML</p>
                   <p className="text-xl font-bold font-display text-purple-500">{formatNumber(d.discharge_ml, 0)}</p>
-                  <p className="text-[10px] text-slate-400">m³/s (w: {d.weights?.w_ml})</p>
+                  <p className="text-[10px] text-slate-400">m³/s (Weight: {d.weights?.w_ml})</p>
+                  <p className="text-[9px] text-slate-400 mt-1">Satellite & rain patterns</p>
                 </div>
-                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border-2 border-emerald-500/30">
+                <div className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border-2 border-emerald-500/40 shadow-xs">
                   <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mb-1">Hybrid Final (Q)</p>
                   <p className="text-xl font-bold font-display text-emerald-500">{formatNumber(d.discharge_m3s, 0)}</p>
-                  <p className="text-[10px] text-slate-400">m³/s (Eq. 9)</p>
+                  <p className="text-[10px] text-slate-400">m³/s (Eq. 9 Solution)</p>
+                  <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-medium mt-1">Best of Both Models</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-100 dark:border-slate-800">
-                <span>95% CI Range: <strong>{formatNumber(d.discharge_low, 0)} – {formatNumber(d.discharge_high, 0)} m³/s</strong></span>
-                <span>Predictive Uncertainty: <strong>±{formatNumber(d.uncertainty_sigma, 0)} m³/s</strong></span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <span>95% Confidence Interval: <strong>{formatNumber(d.discharge_low, 0)} – {formatNumber(d.discharge_high, 0)} m³/s</strong></span>
+                <span>Instantaneous Uncertainty (σ): <strong>±{formatNumber(d.uncertainty_sigma, 0)} m³/s</strong></span>
               </div>
             </motion.div>
           )}

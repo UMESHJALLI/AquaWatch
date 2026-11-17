@@ -44,6 +44,12 @@ export default function LandingPage({ darkMode, setDarkMode }) {
 
         <div className="flex items-center gap-3">
           <Link
+            to="/methodology"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+          >
+            Data Guide & Dictionary
+          </Link>
+          <Link
             to="/dashboard"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-sky-600 hover:bg-sky-500 text-white transition-colors"
           >
@@ -117,6 +123,90 @@ export default function LandingPage({ darkMode, setDarkMode }) {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Plain-English Data Understanding Section */}
+      <section className="py-20 px-6 max-w-6xl mx-auto border-t border-slate-800">
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/60 border border-sky-800/80 text-sky-400 text-xs font-medium mb-3">
+            <Droplets size={13} />
+            Data Clarity & Interpretability
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Understanding River Data at a Glance
+          </h2>
+          <p className="text-sm text-slate-400 max-w-2xl mx-auto">
+            AquaWatch transforms raw satellite orbital pixels into simple, intuitive numbers so any reviewer, student, or disaster manager can understand conditions in seconds.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500/50 transition-colors">
+            <span className="text-xs font-mono font-bold text-sky-400 px-2 py-0.5 rounded bg-sky-950/70 border border-sky-800/50 mb-3 inline-block">
+              01 · Extent
+            </span>
+            <h3 className="text-base font-bold text-white mb-1.5">Water Surface Area</h3>
+            <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+              Measured in <strong>hectares (ha)</strong> and <strong>km²</strong>. 1 hectare is 10,000 m² (about 1.4 football fields).
+            </p>
+            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+              <strong className="text-emerald-400">Normal:</strong> 800–1,500 ha<br />
+              <strong className="text-rose-400">Flood Alert:</strong> &gt; 2,000 ha (+35% expansion)
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-teal-500/50 transition-colors">
+            <span className="text-xs font-mono font-bold text-teal-400 px-2 py-0.5 rounded bg-teal-950/70 border border-teal-800/50 mb-3 inline-block">
+              02 · Geometry
+            </span>
+            <h3 className="text-base font-bold text-white mb-1.5">Mean Channel Width</h3>
+            <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+              Measured in <strong>meters (m)</strong> across 10m normal transects along the river centerline skeleton.
+            </p>
+            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+              <strong className="text-emerald-400">Normal:</strong> 500–850 m<br />
+              <strong className="text-rose-400">Flood Alert:</strong> &gt; 1,100 m (Overbank spill)
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 transition-colors">
+            <span className="text-xs font-mono font-bold text-purple-400 px-2 py-0.5 rounded bg-purple-950/70 border border-purple-800/50 mb-3 inline-block">
+              03 · Volume
+            </span>
+            <h3 className="text-base font-bold text-white mb-1.5">River Discharge (Q)</h3>
+            <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+              Measured in <strong>m³/s</strong> (1 m³/s = 1,000 liters/sec). Fuses Manning hydraulics with machine learning.
+            </p>
+            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+              <strong className="text-emerald-400">Normal:</strong> 2,000–25,000 m³/s<br />
+              <strong className="text-rose-400">Flood Alert:</strong> &gt; 30,000 m³/s (Danger stage)
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 transition-colors">
+            <span className="text-xs font-mono font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-950/70 border border-amber-800/50 mb-3 inline-block">
+              04 · Hazard
+            </span>
+            <h3 className="text-base font-bold text-white mb-1.5">34.5h Early Warning</h3>
+            <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+              Combines satellite widening, rainfall, and soil moisture to issue flood warnings up to <strong>34.5 hours early</strong>.
+            </p>
+            <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400">
+              <strong className="text-emerald-400">Lead Time:</strong> Up to 34.5–36 hours<br />
+              <strong className="text-amber-400">Action:</strong> Barrage pre-release & evacuations
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            to="/methodology"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-sky-400 hover:text-sky-300 hover:underline"
+          >
+            <span>Explore Complete Data Dictionary & Technical Benchmarks</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
 
