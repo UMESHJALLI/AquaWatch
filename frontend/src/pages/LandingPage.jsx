@@ -44,12 +44,6 @@ export default function LandingPage({ darkMode, setDarkMode }) {
 
         <div className="flex items-center gap-3">
           <Link
-            to="/methodology"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
-          >
-            Data Guide & Dictionary
-          </Link>
-          <Link
             to="/dashboard"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-sky-600 hover:bg-sky-500 text-white transition-colors"
           >
@@ -197,16 +191,6 @@ export default function LandingPage({ darkMode, setDarkMode }) {
               <strong className="text-amber-400">Action:</strong> Barrage pre-release & evacuations
             </div>
           </div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link
-            to="/methodology"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-sky-400 hover:text-sky-300 hover:underline"
-          >
-            <span>Explore Complete Data Dictionary & Technical Benchmarks</span>
-            <ArrowRight size={14} />
-          </Link>
         </div>
       </section>
 

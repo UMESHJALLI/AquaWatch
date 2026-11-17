@@ -6,7 +6,6 @@ import MetricCard from '../components/MetricCard'
 import DischargeChart from '../charts/DischargeChart'
 import TurbidityChart from '../charts/TurbidityChart'
 import MapView from '../components/MapView'
-import DataGuideSection from '../components/DataGuideSection'
 import toast from 'react-hot-toast'
 
 export default function Dashboard() {
@@ -98,9 +97,6 @@ export default function Dashboard() {
           </span>
         </motion.div>
       )}
-
-      {/* Comprehensive Plain-English Hydrological Data Guide */}
-      <DataGuideSection defaultOpen={false} />
 
       {/* Metric cards with entire descriptive names and interactive info guides */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
