@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Award, CheckCircle2, TrendingUp, Layers, Droplets, ExternalLink, ShieldCheck, Activity } from 'lucide-react'
+import IEEEValidationFigures from './IEEEValidationFigures'
 
 export default function IEEEBenchmarks() {
   const [activeTab, setActiveTab] = useState('all')
@@ -147,6 +148,16 @@ export default function IEEEBenchmarks() {
               All Outcomes
             </button>
             <button
+              onClick={() => setActiveTab('fig4')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                activeTab === 'fig4'
+                  ? 'bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+              }`}
+            >
+              Figure 4 (Charts)
+            </button>
+            <button
               onClick={() => setActiveTab('table2')}
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 activeTab === 'table2'
@@ -203,6 +214,11 @@ export default function IEEEBenchmarks() {
           </div>
         </div>
       </div>
+
+      {/* FIGURE 4: Quantitative Validation & Multi-Temporal Tracking */}
+      {(activeTab === 'all' || activeTab === 'fig4') && (
+        <IEEEValidationFigures />
+      )}
 
       {/* TABLE II */}
       {(activeTab === 'all' || activeTab === 'table2') && (

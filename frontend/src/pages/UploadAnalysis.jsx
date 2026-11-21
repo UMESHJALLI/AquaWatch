@@ -7,6 +7,7 @@ import { analyzeSatelliteImageInBrowser } from '../utils/clientAnalyzer'
 import { generateMockAnalysis } from '../utils/mockData'
 import ImageViewer from '../components/ImageViewer'
 import MetricCard from '../components/MetricCard'
+import IEEEValidationFigures from '../components/IEEEValidationFigures'
 import toast from 'react-hot-toast'
 
 const DEMO_SCENES = [
@@ -597,6 +598,19 @@ export default function UploadAnalysis() {
             </motion.div>
           )}
         </div>
+      </div>
+
+      {/* Dynamic IEEE Paper Figure 4: Live Quantitative Validation & Multi-Temporal Tracking */}
+      <div className="mt-8">
+        <IEEEValidationFigures
+          currentDischarge={d.discharge_m3s}
+          currentAreaKm2={m.area_km2}
+          rainfallMm={rainfallMm}
+          soilMoisturePct={soilMoisturePct}
+          reservoirRelease={reservoirRelease}
+          engineMode={engineMode}
+          reachName={result?.reach || selectedMission}
+        />
       </div>
     </div>
   )
