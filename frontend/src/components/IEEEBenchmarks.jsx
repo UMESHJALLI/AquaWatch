@@ -217,7 +217,7 @@ export default function IEEEBenchmarks() {
 
       {/* FIGURE 4: Quantitative Validation & Multi-Temporal Tracking */}
       {(activeTab === 'all' || activeTab === 'fig4') && (
-        <IEEEValidationFigures />
+        <IEEEValidationFigures meanChannelWidth={2100} currentDischarge={18500} reachName="Patna Reach (Ganga)" />
       )}
 
       {/* TABLE II */}

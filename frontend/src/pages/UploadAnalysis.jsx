@@ -600,11 +600,12 @@ export default function UploadAnalysis() {
         </div>
       </div>
 
-      {/* Dynamic IEEE Paper Figure 4: Live Quantitative Validation & Multi-Temporal Tracking */}
+      {/* Quantitative Validation & Multi-Temporal Tracking */}
       <div className="mt-8">
         <IEEEValidationFigures
           currentDischarge={d.discharge_m3s}
           currentAreaKm2={m.area_km2}
+          meanChannelWidth={m.avg_width_m}
           rainfallMm={rainfallMm}
           soilMoisturePct={soilMoisturePct}
           reservoirRelease={reservoirRelease}
